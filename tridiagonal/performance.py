@@ -35,17 +35,13 @@ for i in range(n_max):
     t_th[i] = np.min(t_temp_th)
 
 
-fig, ax = plt.subplots(ncols=2, figsize=(8, 5), layout='constrained')
+fig, ax = plt.subplots(figsize=(6, 6), layout='constrained')
 fig.suptitle("Time-Cost Scaling for\nSolving Tridiagonal Matrices")
 
-ax[0].scatter(n_range, t_ge, 0.1, 'r', label="Gaussian elimination")
-ax[0].scatter(n_range, t_th, 0.1, 'b', label="Thomas algorithm")
-ax[0].set(xlabel="$n$", ylabel="Time cost [s]")
-ax[0].legend()
-
-ax[1].scatter(n_range, t_ge**(1/3), 0.1, 'r', label="Gaussian elimination")
-ax[1].scatter(n_range, t_th**(1/3), 0.1, 'b', label="Thomas algorithm")
-ax[1].set(xlabel="$n$", ylabel="Cube-root time cost [s$^{1/3}$]")
+ax.scatter(n_range, t_ge, 0.1, 'r', label="Gaussian elimination")
+ax.scatter(n_range, t_th, 0.1, 'b', label="Thomas algorithm")
+ax.set(xscale='log', yscale='log', xlabel="$n$", ylabel="Time cost [s]")
+ax.legend()
 
 plt.savefig("algo_performance.png", dpi=300)
 # plt.show()
