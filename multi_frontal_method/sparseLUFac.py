@@ -20,31 +20,40 @@ for i in range(n):
   sparseMat2[i,i] = 1
 
 plt.spy(sparseMat1)
-plt.show()
+plt.clf()
+# plt.show()
 
 p,l,u = la.lu(sparseMat1)
 
-fig, axs = plt.subplots(1,3)
+fig, axs = plt.subplots(1,3, figsize=(9, 3))
 axs[0].spy(p,markersize=2)
+axs[0].set_title("$P$")
 axs[1].spy(l,markersize=2)
+axs[1].set_title("$L$")
 axs[2].spy(u,markersize=2)
+axs[2].set_title("$U$")
 for ax in axs.flat:
   ax.set(xticks=([]),yticks=([]))
 plt.savefig('Q2-2c.png',dpi=500,pad_inches=0.01)
 
 plt.spy(sparseMat2)
-plt.show()
+# plt.show()
+plt.close()
 
 p,l,u = la.lu(sparseMat2)
 
-fig, axs = plt.subplots(1,3)
+fig, axs = plt.subplots(1,3, figsize=(9, 3))
 axs[0].spy(p,markersize=2,color='green')
+axs[0].set_title("$P$")
 axs[1].spy(l,markersize=2,color='green')
+axs[1].set_title("$L$")
 axs[2].spy(u,markersize=2,color='green')
+axs[2].set_title("$U$")
 for ax in axs.flat:
   ax.set(xticks=([]),yticks=([]))
 plt.savefig('Q2-2d.png',dpi=500,pad_inches=0.01)
 
+plt.clf()
 plt.spy(sparseMat1,markersize=5)
 plt.savefig('Q2-2a.png',dpi=500,pad_inches=0.01)
 plt.clf()
