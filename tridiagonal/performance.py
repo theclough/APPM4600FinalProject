@@ -1,11 +1,11 @@
 import time
-
-from solvers import gaussian_elimination, thomas
+from solvers import gaussian_elimination, thomas_ge
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse import random
 
 rng = np.random.default_rng()
+
 
 def generate_tridiagonal(n):
     return np.diag(np.full(n, 2)) + np.diag(np.ones(n-1), 1) + np.diag(np.ones(n-1), -1), np.ones(n).T
@@ -18,7 +18,7 @@ def comp_time(f, a, y):
     return t1 - t0
 
 
-n_max = 1000
+n_max = 100
 n_range = np.arange(3, n_max+3, 1)
 n_try = 100
 
@@ -30,7 +30,7 @@ for i in range(n_max):
     t_temp_th = np.empty(n_try)
     for j in range(n_try):
         t_temp_ge[j] = comp_time(np.linalg.solve, *system)
-        t_temp_th[j] = comp_time(thomas, *system)
+        t_temp_th[j] = comp_time(thomas_ge, *system)
     t_ge[i] = np.min(t_temp_ge)
     t_th[i] = np.min(t_temp_th)
 

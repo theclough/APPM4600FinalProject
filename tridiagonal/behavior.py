@@ -1,6 +1,6 @@
 import time
 
-from solvers import gaussian_elimination, thomas
+from solvers import gaussian_elimination, thomas_ge
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse import random
@@ -27,7 +27,7 @@ t_th = np.empty(n_max)
 for i in range(n_max):
     system = generate_tridiagonal(i+3)
     t_ge[i] = comp_time(np.linalg.solve, *system)
-    t_th[i] = comp_time(thomas, *system)
+    t_th[i] = comp_time(thomas_ge, *system)
 
 
 fig, ax = plt.subplots(figsize=(8, 5), layout='constrained')

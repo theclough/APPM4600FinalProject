@@ -6,7 +6,7 @@ def gaussian_elimination(t: np.ndarray, y: np.ndarray):
     return np.linalg.solve(t, y)
 
 
-def thomas(t: np.ndarray, y: np.ndarray):
+def thomas_ge(t: np.ndarray, y: np.ndarray):
     n = t.shape[0]
     cp = np.empty(n-1)
     yp = np.empty(n)
@@ -29,14 +29,33 @@ def thomas(t: np.ndarray, y: np.ndarray):
 
 
 def thomas_lu(t: np.ndarray, y: np.ndarray):
-    pl, u = lu(t, permute_l=True)
-    rho = solve(pl, y)
-    return solve(u, rho)
+    # pl, u = lu(t, permute_l=True)
+    n = t.shape[0]
+    l = np.empty(n-1)
+    u = np.empty(n)
+    rho = np.empty(n)
+    x = np.empty(n)
+
+    u[0] = rho[0] = t[0, 0]
+    for j in range(1, n):
+        # LU factorization
+        l[j-1] = t[j, j-1] / u[j-1]
+        u[j] = t[j, j] - l[j-1] * t[j-1, j]
+
+        # Forward sub
+        rho[j] = y[j] - l[j-1] * y[j-1]
+
+    # Back sub
+    x[n-1] = rho[n-1] / u[n-1]
+    for k in range(n-2, 0, -1):
+        x[k] = (rho[k] - t[k-1, k] * x[k+1]) / u[k]
+
+    return x
 
 
-"""a = np.array([
+a = np.array([
     [5, 0, 0],
-    [6, 1, 1],
+    [6, 1, 1.001],
     [0, -9, -9]
 ])
 r = np.array([
@@ -44,5 +63,5 @@ r = np.array([
 ]).T
 
 # print(thomas_lu(a, r))
-print(thomas(a, r))
-print(solve(a,r))"""
+print(thomas_ge(a, r))
+print(solve(a,r))
